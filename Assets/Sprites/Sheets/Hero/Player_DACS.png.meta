@@ -1,0 +1,897 @@
+fileFormatVersion: 2
+guid: 02e02b04a1e285f4da37e14b0d51416d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6379737251054565433
+    second: Player_DACS_0
+  - first:
+      213: 4978217744118140112
+    second: Player_DACS_1
+  - first:
+      213: -6218933593845639017
+    second: Player_DACS_2
+  - first:
+      213: 3889340138021225209
+    second: Player_DACS_3
+  - first:
+      213: -5567005420191742125
+    second: Player_DACS_4
+  - first:
+      213: 136491865921433248
+    second: Player_DACS_5
+  - first:
+      213: -3003795168019619182
+    second: Player_DACS_6
+  - first:
+      213: 6569188119205929767
+    second: Player_DACS_7
+  - first:
+      213: -7580396007669940499
+    second: Player_DACS_8
+  - first:
+      213: -7055360174540085429
+    second: Player_DACS_9
+  - first:
+      213: 100947520498399028
+    second: Player_DACS_10
+  - first:
+      213: -3968818184699842359
+    second: Player_DACS_11
+  - first:
+      213: -1463252533785693041
+    second: Player_DACS_12
+  - first:
+      213: -3955616407348532888
+    second: Player_DACS_13
+  - first:
+      213: -7238459339603277308
+    second: Player_DACS_14
+  - first:
+      213: -145576984642366217
+    second: Player_DACS_15
+  - first:
+      213: -9091318784678416632
+    second: Player_DACS_16
+  - first:
+      213: 9083615328576609927
+    second: Player_DACS_17
+  - first:
+      213: -6995375534401827547
+    second: Player_DACS_18
+  - first:
+      213: -2730875111741432550
+    second: Player_DACS_19
+  - first:
+      213: -1526348765809563715
+    second: Player_DACS_20
+  - first:
+      213: 3394909212069792642
+    second: Player_DACS_21
+  - first:
+      213: 891009905090358587
+    second: Player_DACS_22
+  - first:
+      213: -5247214558779452423
+    second: Player_DACS_23
+  - first:
+      213: -4937539989816040877
+    second: Player_DACS_24
+  - first:
+      213: 460983639425854264
+    second: Player_DACS_25
+  - first:
+      213: 1241870068900331943
+    second: Player_DACS_26
+  - first:
+      213: 4800724095888523003
+    second: Player_DACS_27
+  - first:
+      213: -2929672738796284267
+    second: Player_DACS_28
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 20
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Player_DACS_0
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 330
+        width: 24
+        height: 49
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c7c09e75ce9677a0800000000000000
+      internalID: -6379737251054565433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_1
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 330
+        width: 24
+        height: 50
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0dc45bc99ae261540800000000000000
+      internalID: 4978217744118140112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_2
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 330
+        width: 22
+        height: 48
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 798561188d8e1b9a0800000000000000
+      internalID: -6218933593845639017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_3
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 330
+        width: 22
+        height: 48
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f28c69bf36b9f530800000000000000
+      internalID: 3889340138021225209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_4
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 330
+        width: 22
+        height: 49
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3570ccac0160eb2b0800000000000000
+      internalID: -5567005420191742125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_5
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 264
+        width: 22
+        height: 49
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ae2afef0aae4e100800000000000000
+      internalID: 136491865921433248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_6
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 264
+        width: 27
+        height: 48
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 292e720a5306056d0800000000000000
+      internalID: -3003795168019619182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_7
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 267
+        width: 29
+        height: 47
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7236cf31ac17a2b50800000000000000
+      internalID: 6569188119205929767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_8
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 264
+        width: 24
+        height: 49
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dee3b026ef50dc690800000000000000
+      internalID: -7580396007669940499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_9
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 264
+        width: 22
+        height: 48
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b47a91a5d43561e90800000000000000
+      internalID: -7055360174540085429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_10
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 198
+        width: 27
+        height: 48
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 437734c2c33a66100800000000000000
+      internalID: 100947520498399028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_11
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 201
+        width: 29
+        height: 47
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c0fad283ecebe8c0800000000000000
+      internalID: -3968818184699842359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_12
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 198
+        width: 24
+        height: 49
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f84730bb29b71bbe0800000000000000
+      internalID: -1463252533785693041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_13
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 198
+        width: 22
+        height: 48
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 869a844d5d3da19c0800000000000000
+      internalID: -3955616407348532888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_14
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 198
+        width: 23
+        height: 50
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40a86d5e493db8b90800000000000000
+      internalID: -7238459339603277308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_15
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 134
+        width: 25
+        height: 48
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f45be6f08ecafdf0800000000000000
+      internalID: -145576984642366217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_16
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 136
+        width: 27
+        height: 45
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80f2863bbb525d180800000000000000
+      internalID: -9091318784678416632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_17
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 132
+        width: 22
+        height: 49
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78e1a18a30c7f0e70800000000000000
+      internalID: 9083615328576609927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_18
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 132
+        width: 22
+        height: 46
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52d4589b30f6bee90800000000000000
+      internalID: -6995375534401827547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_19
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 132
+        width: 23
+        height: 42
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1d52befd8bf91ad0800000000000000
+      internalID: -2730875111741432550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_20
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 68
+        width: 24
+        height: 51
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db7a09a62e151dae0800000000000000
+      internalID: -1526348765809563715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_21
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 66
+        width: 24
+        height: 53
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28b0f1ef0f32d1f20800000000000000
+      internalID: 3394909212069792642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_22
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 66
+        width: 27
+        height: 51
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3de344b9c08d5c00800000000000000
+      internalID: 891009905090358587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_23
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 66
+        width: 22
+        height: 55
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f351b3e8262e27b0800000000000000
+      internalID: -5247214558779452423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_24
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 66
+        width: 35
+        height: 55
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 352aaba1a855a7bb0800000000000000
+      internalID: -4937539989816040877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_25
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 9
+        width: 37
+        height: 33
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83bae3b7d2eb56600800000000000000
+      internalID: 460983639425854264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_26
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 0
+        width: 50
+        height: 49
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a18ef97f320c3110800000000000000
+      internalID: 1241870068900331943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_27
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 0
+        width: 37
+        height: 49
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfef71041299f9240800000000000000
+      internalID: 4800724095888523003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DACS_28
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 0
+        width: 41
+        height: 49
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 596d6e78a26b757d0800000000000000
+      internalID: -2929672738796284267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: fbb44d38aff881943b740c4927ca3516
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Player_DACS_0: -6379737251054565433
+      Player_DACS_1: 4978217744118140112
+      Player_DACS_10: 100947520498399028
+      Player_DACS_11: -3968818184699842359
+      Player_DACS_12: -1463252533785693041
+      Player_DACS_13: -3955616407348532888
+      Player_DACS_14: -7238459339603277308
+      Player_DACS_15: -145576984642366217
+      Player_DACS_16: -9091318784678416632
+      Player_DACS_17: 9083615328576609927
+      Player_DACS_18: -6995375534401827547
+      Player_DACS_19: -2730875111741432550
+      Player_DACS_2: -6218933593845639017
+      Player_DACS_20: -1526348765809563715
+      Player_DACS_21: 3394909212069792642
+      Player_DACS_22: 891009905090358587
+      Player_DACS_23: -5247214558779452423
+      Player_DACS_24: -4937539989816040877
+      Player_DACS_25: 460983639425854264
+      Player_DACS_26: 1241870068900331943
+      Player_DACS_27: 4800724095888523003
+      Player_DACS_28: -2929672738796284267
+      Player_DACS_3: 3889340138021225209
+      Player_DACS_4: -5567005420191742125
+      Player_DACS_5: 136491865921433248
+      Player_DACS_6: -3003795168019619182
+      Player_DACS_7: 6569188119205929767
+      Player_DACS_8: -7580396007669940499
+      Player_DACS_9: -7055360174540085429
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
