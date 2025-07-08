@@ -1,127 +1,100 @@
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Audio;
-using static UnityEditor.VersionControl.Asset;
 
 public class Hero : MonoBehaviour
 {
     [Header("Movement Settings")]
-    [SerializeField] private float speed = 5f;                  // Скорость игрока
-    [SerializeField] private int lives = 5;                     // Жизни игрока
+    [SerializeField] private float _speed = 5f;                 // Скорость игрока
+    [SerializeField] private int _lives = 5;                    // Жизни игрока
 
     [Header("Jump Settings")]
-    [SerializeField] private float jumpForce = 8f;              // Сила начального импульса прыжка
-    [SerializeField] private float jumpTime = 0.3f;             // Время в секундах, сколько можно удерживать прыжок
-    [SerializeField] private float jumpMultiplier = 1.5f;       // Коэффициент увеличения силы прыжка при удержании
-    [SerializeField] private float fallMultiplier = 2.5f;       // Усиление гравитации при падении (делает падение быстрее)
-    [SerializeField] private float lowJumpMultiplier = 2f;      // Коэффициент для уменьшения высоты прыжка при раннем отпускании
+    [SerializeField] private float _jumpForce = 8f;             // Сила начального импульса прыжка
+    [SerializeField] private float _normalMass = 0.36f;         // Масса персонажа по дефолту           
+    [SerializeField] private float _fallMass = 0.6f;            // Увеличенная масса при падении персонажа, чтобы падал быстрее, а то заебал падать как на луне
+    private bool _hasJumped = false;                            // Защита от множественных прыжков в воздухе
 
-    private bool isGrounded = false;                            // True, если персонаж стоит на поверхности
-    private bool isJumping = false;                             // True, пока выполняется прыжок с удержанием
-    private bool hasJumped = false;                             // Защита от множественных прыжков в воздухе
-    private float jumpTimer = 0f;                               // Оставшееся время удержания прыжка
+    [Header("GroundCheck Settings")]
+    [SerializeField] private GameObject _groundCheckObj;        // Ccылка на вспомогательный объект для проверки поверхности
+    [SerializeField] private float _radiusGroundCheck = 1f;     // Радиус вспомогательного объекта
+    [SerializeField] LayerMask _groundMask;                     // Ссылка на слой поверхности
+    private bool _isGrounded = false;                           // True, если персонаж стоит на поверхности
 
-    private Rigidbody2D rb;
-    private SpriteRenderer sprite;
-    private Animator anim;
-    private Vector2 moveVector;
+    private Rigidbody2D _rb;
+    private SpriteRenderer _sprite;
+    private Animator _anim;
+    private Vector2 _moveVector;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        sprite = rb.GetComponentInChildren<SpriteRenderer>();
-        anim = rb.GetComponentInChildren<Animator>();
+        _rb = GetComponent<Rigidbody2D>();
+        _sprite = _rb.GetComponentInChildren<SpriteRenderer>();
+        _anim = _rb.GetComponentInChildren<Animator>();
     }
 
     private void FixedUpdate()
     {
         CheckGround();
-        ApplyBetterJumpPhysics();
     }
 
     void Update()
     {
-        if (isGrounded) State = States.idle;
+        if (_isGrounded) State = States.idle;
 
-        
+        if (Input.GetButtonDown("Jump") && _isGrounded && !_hasJumped)
+        {
+            Jump();
+            _hasJumped = false;
+        }
 
-        if (Input.GetButtonDown("Jump") && isGrounded && !hasJumped)
-            HandleJump();
-        hasJumped = false;
         if (Input.GetButton("Horizontal"))
-            HandleMovement();
+            Run();
     }
 
-    private void HandleMovement()
+    private void Run()
     {
-        if (isGrounded) State = States.run;
+        if (_isGrounded) State = States.run;
 
-        moveVector.x = Input.GetAxis("Horizontal");
-        rb.linearVelocity = new Vector2(moveVector.x * speed, rb.linearVelocity.y);
+        _moveVector.x = Input.GetAxis("Horizontal");
+        _rb.linearVelocity = new Vector2(_moveVector.x * _speed, _rb.linearVelocity.y);
 
-        if (moveVector.x != 0)
-        {
-            sprite.flipX = moveVector.x < 0;
-        }
+        if (_moveVector.x != 0) _sprite.flipX = _moveVector.x < 0;      // Проверка направления движения
     }
 
-    private void HandleJump()
+    private void Jump()
     {
-        if (!isGrounded) State = States.jump;
+        if (!_isGrounded) State = States.jump;
 
-        // Начало прыжка
-        if (Input.GetButtonDown("Jump") && isGrounded && !hasJumped)
-        {
-            isJumping = true;
-            hasJumped = true;
-            jumpTimer = jumpTime;
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-        }
+        _hasJumped = true;
+        //_rb.mass = _normalMass;
 
-        // Удержание прыжка
-        if (Input.GetButton("Jump") && isJumping)
-        {
-            if (jumpTimer > 0)
-            {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * jumpMultiplier);
-                jumpTimer -= Time.deltaTime;
-            }
-            else
-            {
-                isJumping = false;
-            }
-        }
+        _rb.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
 
-        // Отпускание кнопки прыжка
-        if (Input.GetButtonUp("Jump"))
-        {
-            isJumping = false;
-        }
+        //StartCoroutine(ChangeMassWhenFall());                           // При падении присваивается увеличенная масса
     }
 
     private void CheckGround()
     {
-        Collider2D[] collider = Physics2D.OverlapCircleAll(transform.position, 0.3f);
-        isGrounded = collider.Length > 1;
+        _isGrounded = Physics2D.OverlapCircle(_groundCheckObj.transform.position, _radiusGroundCheck, _groundMask);
 
-        if (!isGrounded) State = States.jump;
-    }
-
-    private void ApplyBetterJumpPhysics()
-    {
-        if (rb.linearVelocity.y < 0) // Падение
-        {
-            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
-        }
-        else if (rb.linearVelocity.y > 0 && !Input.GetButton("Jump")) // Короткий прыжок
-        {
-            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
-        }
+        if (!_isGrounded) State = States.jump;
     }
 
     private States State
     {
-        get { return (States)anim.GetInteger("state"); }
-        set { anim.SetInteger("state", (int)value); }
+        get { return (States)_anim.GetInteger("state"); }
+        set { _anim.SetInteger("state", (int)value); }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(_groundCheckObj.transform.position, _radiusGroundCheck); // Отрисовка сферы для проверки поверхности 
+    }
+
+    private IEnumerator ChangeMassWhenFall()
+    {
+        yield return new WaitUntil(() => _rb.linearVelocity.y < 0); 
+        _rb.mass = _fallMass;
     }
 }
 
