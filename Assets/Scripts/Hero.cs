@@ -59,7 +59,7 @@ public class Hero : MonoBehaviour
         _moveVector.x = Input.GetAxis("Horizontal");
         _rb.linearVelocity = new Vector2(_moveVector.x * _speed, _rb.linearVelocity.y);
 
-        if (_moveVector.x != 0) _sprite.flipX = _moveVector.x < 0;      // Проверка направления движения
+        if (_moveVector.x != 0) _sprite.flipX = _moveVector.x < 0;      // Проверка направления движени я
     }
 
     private void Jump()
