@@ -11,17 +11,17 @@ public class Hero : MonoBehaviour
     [SerializeField] private float _jumpForce = 8f;             // Сила начального импульса прыжка
 
     [Header("GroundCheck Settings")]
-    [SerializeField] private GameObject _groundCheckObj;        // Ccылка на доч объект для проверки поверхности
+    [SerializeField] private GameObject _groundCheckObj;        // Ccылка на объект для проверки поверхности
     [SerializeField] private float _radiusGroundCheck = 1f;     // Радиус вспомогательного объекта
     [SerializeField] LayerMask _groundMask;                     // Ссылка на слой поверхности
-    private bool _onGround = false;                             // True, если персонаж стоит на поверхности
+    [SerializeField] private bool _onGround = false;            // True, если персонаж стоит на поверхности
 
     [Header("WallCheck and LedgeCheck Settings")]
-    [SerializeField] private GameObject _wallCheckObj;          // Ccылка на доч объект для проверки стены перед персом
-    [SerializeField] private GameObject _ledgeCheckObj;         // Ссылка на доч объект для проверки уступа
+    [SerializeField] private GameObject _wallCheckObj;          // Ccылка на объект для проверки стены перед персом
+    [SerializeField] private GameObject _ledgeCheckObj;         // Ссылка на объект для проверки уступа
     [SerializeField] private float _lengthLedgeCheck = 1f;      // Длинна вспомогательного объекта
-    private bool _onWall = false;                               // True, если перед персонажем стена
-    private bool _onLedge = false;                              // True, если перед персонажем уступ
+    [SerializeField] private bool _onWall = false;              // True, если перед персонажем стена
+    [SerializeField] private bool _onLedge = false;             // True, если перед персонажем уступ
 
     private Rigidbody2D _rb;
     private SpriteRenderer _sprite;
@@ -39,6 +39,8 @@ public class Hero : MonoBehaviour
     {
         CheckGround();
         CheckLedge();
+
+        
     }
 
     void Update()
@@ -50,6 +52,13 @@ public class Hero : MonoBehaviour
 
         if (Input.GetButton("Horizontal"))
             Run();
+
+        if (_onLedge)
+        {
+            Hang();
+            
+        }
+        
     }
 
     private void Run()
@@ -59,7 +68,7 @@ public class Hero : MonoBehaviour
         _moveVector.x = Input.GetAxis("Horizontal");
         _rb.linearVelocity = new Vector2(_moveVector.x * _speed, _rb.linearVelocity.y);
 
-        if (_moveVector.x != 0) _sprite.flipX = _moveVector.x < 0;      // Проверка направления движени я
+        if (_moveVector.x != 0) _sprite.flipX = _moveVector.x < 0;      // Проверка направления движения
     }
 
     private void Jump()
@@ -73,7 +82,13 @@ public class Hero : MonoBehaviour
     {
         if (!_onGround) State = States.hang;
 
+        while(_onLedge)
+        {
+            _rb.linearVelocity = Vector2.zero;
 
+            if (Input.GetButton("Horizontal"))
+                _onLedge = false;
+        }
     }
 
     private void Climb()
@@ -98,7 +113,7 @@ public class Hero : MonoBehaviour
         {
             _onLedge = !Physics2D.Raycast(_ledgeCheckObj.transform.position, new Vector2(transform.localScale.x, 0), _lengthLedgeCheck, _groundMask);
         }
-        else { _onWall = false; }
+        else { _onLedge = false; }
     }
 
     private States State
