@@ -9,19 +9,15 @@ public class Hero : MonoBehaviour
 
     [Header("Jump Settings")]
     [SerializeField] private float _jumpForce = 8f;             // Сила начального импульса прыжка
+    [SerializeField] private float _normalMass = 0.36f;         // Масса персонажа по дефолту           
+    [SerializeField] private float _fallMass = 0.6f;            // Увеличенная масса при падении персонажа, чтобы падал быстрее, а то заебал падать как на луне
+    private bool _hasJumped = false;                            // Защита от множественных прыжков в воздухе
 
     [Header("GroundCheck Settings")]
-    [SerializeField] private GameObject _groundCheckObj;        // Ccылка на доч объект для проверки поверхности
+    [SerializeField] private GameObject _groundCheckObj;        // Ccылка на вспомогательный объект для проверки поверхности
     [SerializeField] private float _radiusGroundCheck = 1f;     // Радиус вспомогательного объекта
     [SerializeField] LayerMask _groundMask;                     // Ссылка на слой поверхности
-    private bool _onGround = false;                             // True, если персонаж стоит на поверхности
-
-    [Header("WallCheck and LedgeCheck Settings")]
-    [SerializeField] private GameObject _wallCheckObj;          // Ccылка на доч объект для проверки стены перед персом
-    [SerializeField] private GameObject _ledgeCheckObj;         // Ссылка на доч объект для проверки уступа
-    [SerializeField] private float _lengthLedgeCheck = 1f;      // Длинна вспомогательного объекта
-    private bool _onWall = false;                               // True, если перед персонажем стена
-    private bool _onLedge = false;                              // True, если перед персонажем уступ
+    private bool _isGrounded = false;                           // True, если персонаж стоит на поверхности
 
     private Rigidbody2D _rb;
     private SpriteRenderer _sprite;
@@ -38,15 +34,17 @@ public class Hero : MonoBehaviour
     private void FixedUpdate()
     {
         CheckGround();
-        CheckLedge();
     }
 
     void Update()
     {
-        if (_onGround) State = States.idle;
+        if (_isGrounded) State = States.idle;
 
-        if (Input.GetButtonDown("Jump") && _onGround)
+        if (Input.GetButtonDown("Jump") && _isGrounded && !_hasJumped)
+        {
             Jump();
+            _hasJumped = false;
+        }
 
         if (Input.GetButton("Horizontal"))
             Run();
@@ -54,7 +52,7 @@ public class Hero : MonoBehaviour
 
     private void Run()
     {
-        if (_onGround) State = States.run;
+        if (_isGrounded) State = States.run;
 
         _moveVector.x = Input.GetAxis("Horizontal");
         _rb.linearVelocity = new Vector2(_moveVector.x * _speed, _rb.linearVelocity.y);
@@ -64,41 +62,21 @@ public class Hero : MonoBehaviour
 
     private void Jump()
     {
-        if (!_onGround) State = States.jump;
+        if (!_isGrounded) State = States.jump;
+
+        _hasJumped = true;
+        //_rb.mass = _normalMass;
 
         _rb.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
-    }
 
-    private void Hang()
-    {
-        if (!_onGround) State = States.hang;
-
-
-    }
-
-    private void Climb()
-    {
-        if (!_onGround) State = States.climb;
-
-
+        //StartCoroutine(ChangeMassWhenFall());                           // При падении присваивается увеличенная масса
     }
 
     private void CheckGround()
     {
-        _onGround = Physics2D.OverlapCircle(_groundCheckObj.transform.position, _radiusGroundCheck, _groundMask);
+        _isGrounded = Physics2D.OverlapCircle(_groundCheckObj.transform.position, _radiusGroundCheck, _groundMask);
 
-        if (!_onGround) State = States.jump;
-    }
-
-    private void CheckLedge()
-    {
-        _onWall = Physics2D.Raycast(_wallCheckObj.transform.position, new Vector2(transform.localScale.x, 0), _lengthLedgeCheck, _groundMask);
-
-        if (_onWall)
-        {
-            _onLedge = !Physics2D.Raycast(_ledgeCheckObj.transform.position, new Vector2(transform.localScale.x, 0), _lengthLedgeCheck, _groundMask);
-        }
-        else { _onWall = false; }
+        if (!_isGrounded) State = States.jump;
     }
 
     private States State
@@ -111,12 +89,12 @@ public class Hero : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(_groundCheckObj.transform.position, _radiusGroundCheck); // Отрисовка сферы для проверки поверхности 
+    }
 
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(_wallCheckObj.transform.position, new Vector2(_wallCheckObj.transform.position.x + _lengthLedgeCheck * transform.localScale.x, _wallCheckObj.transform.position.y));
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(_ledgeCheckObj.transform.position, new Vector2(_ledgeCheckObj.transform.position.x + _lengthLedgeCheck * transform.localScale.x, _ledgeCheckObj.transform.position.y));
+    private IEnumerator ChangeMassWhenFall()
+    {
+        yield return new WaitUntil(() => _rb.linearVelocity.y < 0); 
+        _rb.mass = _fallMass;
     }
 }
 
