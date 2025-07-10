@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Hero : MonoBehaviour
@@ -6,6 +7,7 @@ public class Hero : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] private float _speed = 5f;                 // Скорость игрока
     [SerializeField] private int _lives = 5;                    // Жизни игрока
+    [SerializeField] private bool _faceRight = true;            // True, если персонаж смотрит вправо
 
     [Header("Jump Settings")]
     [SerializeField] private float _jumpForce = 8f;             // Сила начального импульса прыжка
@@ -38,9 +40,6 @@ public class Hero : MonoBehaviour
     private void FixedUpdate()
     {
         CheckGround();
-        CheckLedge();
-
-        
     }
 
     void Update()
@@ -56,38 +55,49 @@ public class Hero : MonoBehaviour
         if (_onLedge)
         {
             Hang();
-            
         }
-        
+
+        CheckLedge();
     }
 
     private void Run()
     {
         if (_onGround) State = States.run;
 
-        _moveVector.x = Input.GetAxis("Horizontal");
+        if (!_onLedge)
+            _moveVector.x = Input.GetAxis("Horizontal");
+
         _rb.linearVelocity = new Vector2(_moveVector.x * _speed, _rb.linearVelocity.y);
 
-        if (_moveVector.x != 0) _sprite.flipX = _moveVector.x < 0;      // Проверка направления движения
+        //_sprite.flipX = _moveVector.x < 0;      // Проверка направления движения
+        if ((_moveVector.x > 0 && !_faceRight) || (_moveVector.x < 0 && _faceRight))
+        {
+            transform.localScale *= new Vector2(-1, 1);
+            _faceRight = !_faceRight;
+        }
     }
 
     private void Jump()
     {
-        if (!_onGround) State = States.jump;
+        if (!_onGround && !_onLedge) State = States.jump;
 
         _rb.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
     }
 
     private void Hang()
     {
-        if (!_onGround) State = States.hang;
+        if (!_onGround && _onLedge) State = States.hang;
 
-        while(_onLedge)
+        _rb.constraints = RigidbodyConstraints2D.FreezeAll;
+
+        float moveInput = Input.GetAxisRaw("Horizontal");
+        float facingDirection = Mathf.Sign(transform.localScale.x);
+
+        // Если ввод противоположен направлению персонажа
+        if (Mathf.Sign(moveInput) != facingDirection)
         {
-            _rb.linearVelocity = Vector2.zero;
-
-            if (Input.GetButton("Horizontal"))
-                _onLedge = false;
+            _onLedge = false;
+            _rb.constraints &= ~RigidbodyConstraints2D.FreezePosition;
         }
     }
 
@@ -102,7 +112,12 @@ public class Hero : MonoBehaviour
     {
         _onGround = Physics2D.OverlapCircle(_groundCheckObj.transform.position, _radiusGroundCheck, _groundMask);
 
-        if (!_onGround) State = States.jump;
+        if (!_onGround && !_onLedge)
+        {
+            State = States.jump;
+
+            _rb.constraints &= ~RigidbodyConstraints2D.FreezePosition;
+        }
     }
 
     private void CheckLedge()
@@ -113,7 +128,11 @@ public class Hero : MonoBehaviour
         {
             _onLedge = !Physics2D.Raycast(_ledgeCheckObj.transform.position, new Vector2(transform.localScale.x, 0), _lengthLedgeCheck, _groundMask);
         }
-        else { _onLedge = false; }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        
     }
 
     private States State
