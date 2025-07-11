@@ -5,25 +5,28 @@ using UnityEngine;
 public class Hero : MonoBehaviour
 {
     [Header("Movement Settings")]
-    [SerializeField] private float _speed = 5f;                 // Скорость игрока
-    [SerializeField] private int _lives = 5;                    // Жизни игрока
-    [SerializeField] private bool _faceRight = true;            // True, если персонаж смотрит вправо
+    [SerializeField] private float _speed = 5f;                     // Скорость игрока
+    [SerializeField] private int _lives = 5;                        // Жизни игрока
+    [SerializeField] private bool _faceRight = true;                // True, если персонаж смотрит вправо
 
     [Header("Jump Settings")]
-    [SerializeField] private float _jumpForce = 8f;             // Сила начального импульса прыжка
+    [SerializeField] private float _jumpForce = 8f;                 // Сила начального импульса прыжка
 
     [Header("GroundCheck Settings")]
-    [SerializeField] private GameObject _groundCheckObj;        // Ccылка на объект для проверки поверхности
-    [SerializeField] private float _radiusGroundCheck = 1f;     // Радиус вспомогательного объекта
-    [SerializeField] LayerMask _groundMask;                     // Ссылка на слой поверхности
-    [SerializeField] private bool _onGround = false;            // True, если персонаж стоит на поверхности
+    [SerializeField] private GameObject _groundCheckObj;            // Ccылка на объект для проверки поверхности
+    [SerializeField] private float _radiusGroundCheck = 1f;         // Радиус вспомогательного объекта
+    [SerializeField] LayerMask _groundMask;                         // Ссылка на слой поверхности
+    [SerializeField] private bool _onGround = false;                // True, если персонаж стоит на поверхности
 
     [Header("WallCheck and LedgeCheck Settings")]
-    [SerializeField] private GameObject _wallCheckObj;          // Ccылка на объект для проверки стены перед персом
-    [SerializeField] private GameObject _ledgeCheckObj;         // Ссылка на объект для проверки уступа
-    [SerializeField] private float _lengthLedgeCheck = 1f;      // Длинна вспомогательного объекта
-    [SerializeField] private bool _onWall = false;              // True, если перед персонажем стена
-    [SerializeField] private bool _onLedge = false;             // True, если перед персонажем уступ
+    [SerializeField] private GameObject _wallCheckObj;              // Ccылка на объект для проверки стены перед персом
+    [SerializeField] private GameObject _ledgeCheckObj;             // Ссылка на объект для проверки уступа
+    [SerializeField] private GameObject _finishClimbPositionObj;    // Ссылка на объект c координатами для перемещения персонажа после подъема на уступ
+    [SerializeField] private float _lengthLedgeCheck = 1f;          // Длинна вспомогательного объекта
+    [SerializeField] private bool _onWall = false;                  // True, если перед персонажем стена
+    [SerializeField] private bool _onLedge = false;                 // True, если перед персонажем уступ
+    [SerializeField] private bool _blockMoveForClimb = false;       // True, если персонаж взбирается на уступ
+
 
     private Rigidbody2D _rb;
     private SpriteRenderer _sprite;
@@ -33,8 +36,8 @@ public class Hero : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _sprite = _rb.GetComponentInChildren<SpriteRenderer>();
-        _anim = _rb.GetComponentInChildren<Animator>();
+        _sprite = _rb.GetComponent<SpriteRenderer>();
+        _anim = _rb.GetComponent<Animator>();
     }
 
     private void FixedUpdate()
@@ -46,16 +49,19 @@ public class Hero : MonoBehaviour
     {
         if (_onGround) State = States.idle;
 
-        if (Input.GetButtonDown("Jump") && _onGround)
+        if (Input.GetButtonDown("Jump") && _onGround && !_blockMoveForClimb)
             Jump();
 
-        if (Input.GetButton("Horizontal"))
+        if (Input.GetButton("Horizontal") && !_blockMoveForClimb)
             Run();
 
         if (_onLedge)
         {
             Hang();
         }
+
+        if (_blockMoveForClimb)
+            State = States.climb;
 
         CheckLedge();
     }
@@ -91,26 +97,43 @@ public class Hero : MonoBehaviour
         _rb.constraints = RigidbodyConstraints2D.FreezeAll;
 
         float moveInput = Input.GetAxisRaw("Horizontal");
-        float facingDirection = Mathf.Sign(transform.localScale.x);
+        float climbInput = Input.GetAxisRaw("Vertical");
+        float facingDirection = transform.localScale.x >= 0 ? 1 : -1;
 
         // Если ввод противоположен направлению персонажа
-        if (Mathf.Sign(moveInput) != facingDirection)
+        if (moveInput != 0 && Mathf.Sign(moveInput) != facingDirection && !_blockMoveForClimb)
         {
             _onLedge = false;
             _rb.constraints &= ~RigidbodyConstraints2D.FreezePosition;
+        }
+        else if (climbInput != 0 && Mathf.Sign(climbInput) == 1)
+        {
+            _blockMoveForClimb = true;
         }
     }
 
     private void Climb()
     {
-        if (!_onGround) State = States.climb;
+        
+    }
 
+    void FinishClimb()
+    {
+        transform.position = new Vector3(_finishClimbPositionObj.transform.position.x, 
+                                         _finishClimbPositionObj.transform.position.y, 
+                                         _finishClimbPositionObj.transform.position.z);
 
+        _blockMoveForClimb = false;
+        _onLedge = false;
+        _rb.constraints &= ~RigidbodyConstraints2D.FreezePosition;
+        State = States.idle;
     }
 
     private void CheckGround()
     {
-        _onGround = Physics2D.OverlapCircle(_groundCheckObj.transform.position, _radiusGroundCheck, _groundMask);
+        _onGround = Physics2D.OverlapCircle(_groundCheckObj.transform.position, 
+                                            _radiusGroundCheck, 
+                                            _groundMask);
 
         if (!_onGround && !_onLedge)
         {
@@ -122,17 +145,18 @@ public class Hero : MonoBehaviour
 
     private void CheckLedge()
     {
-        _onWall = Physics2D.Raycast(_wallCheckObj.transform.position, new Vector2(transform.localScale.x, 0), _lengthLedgeCheck, _groundMask);
+        _onWall = Physics2D.Raycast(_wallCheckObj.transform.position, 
+                                    new Vector2(transform.localScale.x, 0), 
+                                    _lengthLedgeCheck, 
+                                    _groundMask);
 
         if (_onWall)
         {
-            _onLedge = !Physics2D.Raycast(_ledgeCheckObj.transform.position, new Vector2(transform.localScale.x, 0), _lengthLedgeCheck, _groundMask);
+            _onLedge = !Physics2D.Raycast(_ledgeCheckObj.transform.position, 
+                                          new Vector2(transform.localScale.x, 0), 
+                                          _lengthLedgeCheck, 
+                                          _groundMask);
         }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        
     }
 
     private States State
@@ -147,10 +171,14 @@ public class Hero : MonoBehaviour
         Gizmos.DrawWireSphere(_groundCheckObj.transform.position, _radiusGroundCheck); // Отрисовка сферы для проверки поверхности 
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(_wallCheckObj.transform.position, new Vector2(_wallCheckObj.transform.position.x + _lengthLedgeCheck * transform.localScale.x, _wallCheckObj.transform.position.y));
+        Gizmos.DrawLine(_wallCheckObj.transform.position, 
+                        new Vector2(_wallCheckObj.transform.position.x + _lengthLedgeCheck * transform.localScale.x, 
+                        _wallCheckObj.transform.position.y));
 
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(_ledgeCheckObj.transform.position, new Vector2(_ledgeCheckObj.transform.position.x + _lengthLedgeCheck * transform.localScale.x, _ledgeCheckObj.transform.position.y));
+        Gizmos.DrawLine(_ledgeCheckObj.transform.position, 
+                        new Vector2(_ledgeCheckObj.transform.position.x + _lengthLedgeCheck * transform.localScale.x, 
+                        _ledgeCheckObj.transform.position.y));
     }
 }
 
