@@ -4,7 +4,7 @@ public class Hero : MonoBehaviour
 {
     [Header("Movement Settings")]
     [SerializeField] private float _speed = 5f;                     // Скорость игрока
-    [SerializeField] private int _lives = 5;                        // Жизни игрока
+    [SerializeField] private int _maxHealth = 6;                        // Жизни игрока
     [SerializeField] private bool _faceRight = true;                // True, если персонаж смотрит вправо
 
     [Header("Jump Settings")]
@@ -26,16 +26,20 @@ public class Hero : MonoBehaviour
     [SerializeField] private bool _blockMoveForClimb = false;       // True, если персонаж взбирается на уступ
 
 
-    private Rigidbody2D _rb;
-    private SpriteRenderer _sprite;
-    private Animator _anim;
-    private Vector2 _moveVector;
+    private Rigidbody2D rb;
+    private SpriteRenderer sprite;
+    private Animator anim;
+    private Vector2 moveVector;
+
+    private int currentHealth;
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody2D>();
-        _sprite = _rb.GetComponent<SpriteRenderer>();
-        _anim = _rb.GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        sprite = rb.GetComponent<SpriteRenderer>();
+        anim = rb.GetComponent<Animator>();
+
+        currentHealth = _maxHealth;
     }
 
     private void FixedUpdate()
@@ -69,12 +73,12 @@ public class Hero : MonoBehaviour
         if (_onGround) State = States.run;
 
         if (!_onLedge)
-            _moveVector.x = Input.GetAxis("Horizontal");
+            moveVector.x = Input.GetAxis("Horizontal");
 
-        _rb.linearVelocity = new Vector2(_moveVector.x * _speed, _rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(moveVector.x * _speed, rb.linearVelocity.y);
 
-        //_sprite.flipX = _moveVector.x < 0;      // Проверка направления движения
-        if ((_moveVector.x > 0 && !_faceRight) || (_moveVector.x < 0 && _faceRight))
+        //sprite.flipX = moveVector.x < 0;      // Проверка направления движения
+        if ((moveVector.x > 0 && !_faceRight) || (moveVector.x < 0 && _faceRight))
         {
             transform.localScale *= new Vector2(-1, 1);
             _faceRight = !_faceRight;
@@ -85,14 +89,14 @@ public class Hero : MonoBehaviour
     {
         if (!_onGround && !_onLedge) State = States.jump;
 
-        _rb.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+        rb.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
     }
 
     private void Hang()
     {
         if (!_onGround && _onLedge) State = States.hang;
 
-        _rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
 
         float moveInput = Input.GetAxisRaw("Horizontal");
         float climbInput = Input.GetAxisRaw("Vertical");
@@ -102,17 +106,12 @@ public class Hero : MonoBehaviour
         if (moveInput != 0 && Mathf.Sign(moveInput) != facingDirection && !_blockMoveForClimb)
         {
             _onLedge = false;
-            _rb.constraints &= ~RigidbodyConstraints2D.FreezePosition;
+            rb.constraints &= ~RigidbodyConstraints2D.FreezePosition;
         }
         else if (climbInput != 0 && Mathf.Sign(climbInput) == 1)
         {
             _blockMoveForClimb = true;
         }
-    }
-
-    private void Climb()
-    {
-        
     }
 
     void FinishClimb()
@@ -123,7 +122,7 @@ public class Hero : MonoBehaviour
 
         _blockMoveForClimb = false;
         _onLedge = false;
-        _rb.constraints &= ~RigidbodyConstraints2D.FreezePosition;
+        rb.constraints &= ~RigidbodyConstraints2D.FreezePosition;
         State = States.idle;
     }
 
@@ -137,7 +136,7 @@ public class Hero : MonoBehaviour
         {
             State = States.jump;
 
-            _rb.constraints &= ~RigidbodyConstraints2D.FreezePosition;
+            rb.constraints &= ~RigidbodyConstraints2D.FreezePosition;
         }
     }
 
@@ -157,10 +156,27 @@ public class Hero : MonoBehaviour
         }
     }
 
+    public void GetDamage()
+    {
+        currentHealth -= 1;
+        Debug.Log("Player took damage. Current health: " + currentHealth);
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("Player died!");
+        // тут можно отключить управление, включить анимацию смерти и т.д.
+    }
+
     private States State
     {
-        get { return (States)_anim.GetInteger("state"); }
-        set { _anim.SetInteger("state", (int)value); }
+        get { return (States)anim.GetInteger("state"); }
+        set { anim.SetInteger("state", (int)value); }
     }
 
     private void OnDrawGizmos()

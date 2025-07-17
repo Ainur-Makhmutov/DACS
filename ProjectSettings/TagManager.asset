@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Zombie
   layers:
   - Default
   - TransparentFX
@@ -12,7 +13,7 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
+  - Backgound
   - 
   - 
   - 
@@ -44,8 +45,14 @@ TagManager:
   - name: Ground
     uniqueID: 4066885371
     locked: 0
+  - name: Zombies
+    uniqueID: 3342792257
+    locked: 0
   - name: Hero
     uniqueID: 3091565981
+    locked: 0
+  - name: UI
+    uniqueID: 888899417
     locked: 0
   m_RenderingLayers:
   - Default

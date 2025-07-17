@@ -8,11 +8,11 @@ public class VisionCone2D : MonoBehaviour
     [SerializeField] private float viewDistance = 5f;       // дистанция зоны видимости
     [SerializeField] private float viewAngle = 90f;         // Угол конуса зоны видимости
     [SerializeField] private int rayCount = 50;             // лучи в конусе
-    [SerializeField] private LayerMask obstacleMask;        // маска, которая загораживает зону видимости
+    [SerializeField] private LayerMask obstacleMask;        // слой, который загораживает зону видимости
 
     private Mesh mesh;
 
-    private void Start()
+    private void Awake()
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
