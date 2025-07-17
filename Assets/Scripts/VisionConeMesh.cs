@@ -4,10 +4,11 @@ using System.Collections.Generic;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class VisionCone2D : MonoBehaviour
 {
-    public float viewDistance = 5f;
-    public float viewAngle = 90f;
-    public int rayCount = 50;
-    public LayerMask obstacleMask;
+    [Header("VisionCone Settings")]
+    [SerializeField] private float viewDistance = 5f;       // дистанция зоны видимости
+    [SerializeField] private float viewAngle = 90f;         // Угол конуса зоны видимости
+    [SerializeField] private int rayCount = 50;             // лучи в конусе
+    [SerializeField] private LayerMask obstacleMask;        // маска, которая загораживает зону видимости
 
     private Mesh mesh;
 
