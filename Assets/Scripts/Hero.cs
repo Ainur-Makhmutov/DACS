@@ -57,6 +57,9 @@ public class Hero : MonoBehaviour
         if (Input.GetButton("Horizontal") && !_blockMoveForClimb)
             Run();
 
+        if (Input.GetKey(KeyCode.LeftControl) && !_blockMoveForClimb)
+            Attack();
+
         if (_onLedge)
         {
             Hang();
@@ -154,6 +157,11 @@ public class Hero : MonoBehaviour
                                           _lengthLedgeCheck, 
                                           _groundMask);
         }
+    }
+
+    private void Attack()
+    {
+        State = States.fire;
     }
 
     public void GetDamage()
